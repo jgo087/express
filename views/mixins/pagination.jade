@@ -1,0 +1,29 @@
+mixin pagination(pagination)
+
+  if pagination.count > pagination.resultsPerPage
+
+    #pagination
+
+      ul.pagination
+
+        li(class=pagination.page==1 ? 'disabled' : '')
+
+          if pagination.page==1
+            span «
+          else
+            a(href=Article.getPath('index')+'?seite='+(parseInt(pagination.page)-1)) «
+
+        - for(var page = 1; page <= pagination.pages; page++)
+
+          li(class=(page==pagination.page ? 'active' : ''))
+            if page==pagination.page
+              span= page
+            else
+              a(href=Article.getPath('index')+'?seite='+page)= page
+
+        li(class=pagination.page==pagination.pages ? 'disabled' : '')
+
+          if pagination.page==pagination.pages
+            span «
+          else
+            a(href=Article.getPath('index')+'?seite='+(parseInt(pagination.page)+1)) »

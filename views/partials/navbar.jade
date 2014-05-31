@@ -1,0 +1,35 @@
+nav.navbar.navbar-fixed-top.navbar-default#navbar(role='navigation')
+
+  .container-fluid
+
+    .navbar-header
+
+      a.navbar-brand(href='/') Brand
+
+    form(method='GET' action='/suche' accept-charset='UTF-8').navbar-form.navbar-right#searchBar
+
+      .form-group
+        input(type='text' name='begriff' placeholder='Suchbegriff').form-control
+      button(type='submit').btn.btn-default.glyphicon.glyphicon-search
+
+    ul.nav.navbar-nav.navbar-right
+
+      li.uebersicht
+
+        a(href='/')
+          span.glyphicon.glyphicon-th-list
+          span.navItemText Index
+
+      li.kategorien.dropdown
+
+        a(href='/catgeories')
+
+          span.glyphicon.glyphicon-inbox
+          span.navItemText Categories
+          b.navItemText.caret
+
+        ul.dropdown-menu
+          if foo && foo.length
+            - each bar in foo
+              li(class='cat-' + bar.id)
+                a(href='')= cat.title
