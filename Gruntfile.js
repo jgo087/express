@@ -38,7 +38,7 @@ module.exports = function(grunt) {
 
     browserify: {
       dev: {
-        src: ['assets/js/master.js'],
+        src: ['api/assets/js/master.js'],
         dest: 'public/js/dist.js',
       }
     },
@@ -46,11 +46,11 @@ module.exports = function(grunt) {
 
     watch: {
       scripts: {
-        files: ['assets/js/**/*'],
+        files: ['api/assets/js/**/*'],
         tasks: ['browserify', 'uglify']
       },
       styles: {
-        files: ['assets/styles/**/*'],
+        files: ['api/assets/styles/**/*'],
         tasks: ['less']
       },
     },
