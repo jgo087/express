@@ -1,3 +1,9 @@
+/**********************************
+  Middleware and bootstrap
+
+  Sequence needs to be maintained
+*********************************/
+
 var fs = require('fs');
 var express = require('express');
 var path = require('path');
@@ -5,57 +11,46 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var multer = require('multer');
+var session = require('express-session');
 
 var app = express();
 
-// view engine setup
+// View engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use(favicon());
-app.use(logger('short'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(logger('tiny'));
+app.use(bodyParser());
+app.use(multer({
+  dest: './public/media',
+  limits: {
+    fieldSize: '40mb' // for article wysiwyg
+  },
+  onFilesLimit: function() { console.log('Reached file size limit!'); },
+  onFieldsLimit: function() { console.log('Reached field size limit!'); },
+}));
 app.use(cookieParser());
+app.use(session({ secret: 'mMaCt-xxyUJ&p]@KtH#y' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
 /**********************************
-  Set the routes
+  Routes
 *********************************/
 require('./routes')(app);
 
 
 // catch 404 and forward to error handler
+// ( see config/error )
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
 
-/// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
-    });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
-});
+require('./config/error')(app);
 
 
 module.exports = app;

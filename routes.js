@@ -1,9 +1,18 @@
+/**********************************
+  Maintain order, please!
+*********************************/
+
+
 module.exports = function(app) {
 
   /**********************************
     Import all controllers
   *********************************/
-  var ctrl = require('./modules/importControllers')();
+  var ctrl = require('./api/modules/importControllers')();
+
+
+  // gets called before every other action
+  app.use(ctrl.base.before);
 
 
   /**********************************

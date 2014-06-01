@@ -15,10 +15,10 @@ module.exports = function(grunt) {
     less: {
       dev: {
         options: {
-          paths: ["assets/styles"]
+          paths: ["api/assets/styles"]
         },
         files: {
-          "public/styles/dist.css": "assets/styles/imports.less"
+          "public/styles/dist.css": "api/assets/styles/imports.less"
         }
       },
     },
